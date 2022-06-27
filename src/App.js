@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import Navigation, { Pages, ProgressBar } from "./Components/Navigation";
+import Page1 from "./Components/Pages/Page1";
+import Page2 from "./Components/Pages/Page2";
+import Page3 from "./Components/Pages/Page3";
+import Wizard from "./Components/Wizard";
+import { actions } from "./Reducer/Reducer";
+import { ButtonNext, ButtonPrev } from "./Ui/Button";
+
+
+Wizard.ButtonNext = ButtonNext;
+Wizard.ButtonPrev = ButtonPrev;
+
+const initialState = {
+  activePageIndex: 2
+}
+const reducer = (state, action) => {
+  if(action.type === actions.NEXT_PAGE) {
+    console.log("NEXT_PAGE click");
+  }
+  return state;
+}
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wizard initialState={initialState} reducer={reducer}>
+      <Navigation />
+      <Pages>
+        <Page1 />
+        <Page2 />
+        <Page3 />
+      </Pages>
+      <ProgressBar/>
+      <div className="flex justify-around items-center bg-gray-400 p-3">
+      
+      <Wizard.ButtonPrev />
+
+      <Wizard.ButtonNext />
+      </div>
+    </Wizard>
   );
 }
 
